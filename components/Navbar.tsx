@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import { User, UserRole } from '../types';
+import { HeartPulse, Menu, X, LogOut, User as UserIcon, Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
   user: User;
@@ -19,18 +21,19 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout, currentPage, navigate }
           <div className="flex items-center">
             <button 
               onClick={() => navigate('home')} 
-              className="flex-shrink-0 flex items-center group"
+              className="flex-shrink-0 flex items-center group gap-2"
             >
-              <div className="bg-red-600 rounded-full p-1.5 mr-2 group-hover:bg-red-700 transition-colors">
-                <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Blood Drop */}
-                  <path d="M12 2c0 0-5 5.5-5 9a5 5 0 0 0 10 0c0-3.5-5-9-5-9z" fill="currentColor" stroke="none" />
-                  {/* Cupping Hand */}
-                  <path d="M18 11c-1.5-1.5-3.5-2.5-5-2.5s-3.5 1-5 2.5l-2 2" stroke="white" />
-                  <path d="M4 14c0 0 0 5 4 7s9-1 10-3" stroke="white" />
-                </svg>
+              <div className="bg-red-600 rounded-xl p-2 group-hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-200 group-hover:shadow-red-300 group-hover:-translate-y-0.5">
+                <HeartPulse className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-slate-900 tracking-tight">Vision<span className="text-red-600">Seekers</span></span>
+              <div className="flex flex-col items-start">
+                <span className="text-xl font-black text-slate-900 tracking-tighter leading-none">
+                  VISION<span className="text-red-600">SEEKERS</span>
+                </span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-none mt-1">
+                  Blood Management
+                </span>
+              </div>
             </button>
             <div className="hidden sm:ml-8 sm:flex sm:space-x-8">
               <button 
@@ -41,8 +44,9 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout, currentPage, navigate }
               </button>
               <button 
                 onClick={() => navigate('emergency')}
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${currentPage === 'emergency' ? 'border-red-500 text-slate-900' : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'}`}
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium gap-2 transition-all ${currentPage === 'emergency' ? 'border-red-500 text-slate-900' : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'}`}
               >
+                <Search className="h-4 w-4" />
                 Emergency Search
               </button>
             </div>
@@ -76,8 +80,9 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout, currentPage, navigate }
                 </button>
                 <button 
                   onClick={onLogout}
-                  className="text-slate-500 hover:text-red-600 font-medium text-sm"
+                  className="flex items-center gap-1 text-slate-500 hover:text-red-600 font-medium text-sm transition-colors"
                 >
+                  <LogOut className="h-4 w-4" />
                   Logout
                 </button>
               </div>
@@ -86,14 +91,9 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout, currentPage, navigate }
           <div className="-mr-2 flex items-center sm:hidden">
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none transition-colors"
             >
-              <svg className={`${isOpen ? 'hidden' : 'block'} h-6 w-6`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              <svg className={`${isOpen ? 'block' : 'hidden'} h-6 w-6`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
